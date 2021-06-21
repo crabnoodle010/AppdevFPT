@@ -11,6 +11,7 @@ using FPTManagerment.ViewModels;
 
 namespace FPTManagerment.Controllers
 {
+    [Authorize]
     public class CoursesController : Controller
     {
         private ApplicationDbContext _context;
