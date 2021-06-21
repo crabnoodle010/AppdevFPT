@@ -178,9 +178,14 @@
     <Compile Include="Migrations\202106210920315_AddCategoryTable.Designer.cs">
       <DependentUpon>202106210920315_AddCategoryTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106210935291_AddCourseTable.cs" />
+    <Compile Include="Migrations\202106210935291_AddCourseTable.Designer.cs">
+      <DependentUpon>202106210935291_AddCourseTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Course.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -266,6 +271,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202106210920315_AddCategoryTable.resx">
       <DependentUpon>202106210920315_AddCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106210935291_AddCourseTable.resx">
+      <DependentUpon>202106210935291_AddCourseTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
