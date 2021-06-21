@@ -18,6 +18,8 @@ namespace FPTManagerment.Models
         [DisplayName("Full name")]
         public string FullName { get; set; }
         [Required]
+        public int Age { get; set; }
+        [Required]
         public string Address { get; set; }
         [Required]
         [DisplayName("Date Of Birth")]
@@ -25,5 +27,9 @@ namespace FPTManagerment.Models
         [Required]
         [DisplayName("Number Phone")]
         public int NumberPhone { get; set; }
+
+        [Display(Name = "Department")]
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
     }
 }
