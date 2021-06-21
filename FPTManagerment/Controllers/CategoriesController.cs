@@ -1,4 +1,5 @@
 ﻿using FPTManagerment.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,13 @@ namespace FPTManagerment.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: Categories
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             var categories = _context.Categories.ToList();
+            if (!searchString.IsNullOrWhiteSpace())
+            {
+                categories = categories.Where(t => t.Name.Contains(searchString)).ToList();
+            }
             return View(categories);
         }
         public ActionResult Details(int id)
@@ -45,6 +50,10 @@ namespace FPTManagerment.Controllers
         [HttpPost]
         public ActionResult Create(Category category)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
             var newCategory = new Category
             {
                 Name = category.Name,
@@ -65,6 +74,10 @@ namespace FPTManagerment.Controllers
         [HttpPost]
         public ActionResult Edit(Category category)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
             var categoryInDb = _context.Categories.SingleOrDefault(t => t.Id == category.Id);
             if (categoryInDb == null) return HttpNotFound();
 
