@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FPTManagerment.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace FPTManagerment.Controllers
 {
@@ -17,15 +18,29 @@ namespace FPTManagerment.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationDbContext context)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            Context = context;
+        }
+        public ApplicationDbContext Context
+        {
+            get
+            {
+                return _context ?? new ApplicationDbContext();
+            }
+            private set
+            {
+                _context = value;
+            }
         }
 
         public ApplicationSignInManager SignInManager
@@ -155,6 +170,18 @@ namespace FPTManagerment.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var trainee = new TraineeIf
+                    {
+                        FullName = model.Trainee.FullName,
+                        UserId = user.Id,
+                        Address = model.Trainee.Address,
+                        Age = model.Trainee.Age,
+                        DateOfBirth = model.Trainee.DateOfBirth,
+                        NumberPhone = model.Trainee.NumberPhone,
+                    };
+                    _context.TraineeIfs.Add(trainee);
+                    _context.SaveChanges();
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
